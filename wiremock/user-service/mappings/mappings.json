@@ -1,0 +1,213 @@
+{
+  "mappings": [
+    {
+      "id": "get-product-by-id",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/products/([0-9]+)"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{request.pathSegments.[1]}}",
+          "name": "Product {{request.pathSegments.[1]}}",
+          "description": "Description for product {{request.pathSegments.[1]}}",
+          "price": "{{randomDecimal min=10.0 max=999.99}}",
+          "category": "Electronics",
+          "available": true,
+          "created_at": "2024-01-15T10:30:00"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "get-products-paginated",
+      "request": {
+        "method": "GET",
+        "urlPath": "/products"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": [
+          {
+            "id": 1,
+            "name": "Smartphone Pro",
+            "description": "Latest smartphone with advanced features",
+            "price": 899.99,
+            "category": "Electronics",
+            "available": true,
+            "created_at": "2024-01-15T10:30:00"
+          },
+          {
+            "id": 2,
+            "name": "Wireless Headphones",
+            "description": "High-quality wireless headphones",
+            "price": 299.99,
+            "category": "Electronics",
+            "available": true,
+            "created_at": "2024-01-16T11:15:00"
+          },
+          {
+            "id": 3,
+            "name": "Coffee Maker",
+            "description": "Automatic coffee maker with timer",
+            "price": 149.99,
+            "category": "Home & Garden",
+            "available": false,
+            "created_at": "2024-01-17T14:45:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "create-product",
+      "request": {
+        "method": "POST",
+        "urlPath": "/products",
+        "headers": {
+          "Content-Type": {
+            "contains": "application/json"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.name"
+          },
+          {
+            "matchesJsonPath": "$.description"
+          },
+          {
+            "matchesJsonPath": "$.price"
+          },
+          {
+            "matchesJsonPath": "$.category"
+          }
+        ]
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{randomInt lower=100 upper=999}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "price": "{{jsonPath request.body '$.price'}}",
+          "category": "{{jsonPath request.body '$.category'}}",
+          "available": true,
+          "created_at": "{{now format='yyyy-MM-dd HH:mm:ss'}}"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "update-product",
+      "request": {
+        "method": "PUT",
+        "urlPathPattern": "/products/([0-9]+)",
+        "headers": {
+          "Content-Type": {
+            "contains": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{request.pathSegments.[1]}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "description": "{{jsonPath request.body '$.description'}}",
+          "price": "{{jsonPath request.body '$.price'}}",
+          "category": "{{jsonPath request.body '$.category'}}",
+          "available": true,
+          "created_at": "2024-01-15T10:30:00"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "delete-product",
+      "request": {
+        "method": "DELETE",
+        "urlPathPattern": "/products/([0-9]+)"
+      },
+      "response": {
+        "status": 204
+      }
+    },
+    {
+      "id": "get-products-by-category",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/products/category/([a-zA-Z%20]+)"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": [
+          {
+            "id": 1,
+            "name": "Smartphone Pro",
+            "description": "Latest smartphone with advanced features",
+            "price": 899.99,
+            "category": "{{request.pathSegments.[2]}}",
+            "available": true,
+            "created_at": "2024-01-15T10:30:00"
+          },
+          {
+            "id": 2,
+            "name": "Wireless Headphones",
+            "description": "High-quality wireless headphones",
+            "price": 299.99,
+            "category": "{{request.pathSegments.[2]}}",
+            "available": true,
+            "created_at": "2024-01-16T11:15:00"
+          }
+        ],
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "simulate-product-timeout",
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "urlPath": "/products/timeout"
+      },
+      "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 15000,
+        "jsonBody": {
+          "message": "This will timeout"
+        }
+      }
+    },
+    {
+      "id": "simulate-product-error",
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "urlPath": "/products/error"
+      },
+      "response": {
+        "status": 503,
+        "jsonBody": {
+          "error": "Service Unavailable",
+          "message": "Simulated error for testing circuit breaker"
+        }
+      }
+    }
+  ]
+}

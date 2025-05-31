@@ -1,0 +1,203 @@
+{
+  "mappings": [
+    {
+      "id": "get-user-by-id",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/users/([0-9]+)"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{request.pathSegments.[1]}}",
+          "name": "User {{request.pathSegments.[1]}}",
+          "email": "user{{request.pathSegments.[1]}}@example.com",
+          "status": "ACTIVE",
+          "created_at": "2024-01-15T10:30:00"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "get-users-paginated",
+      "request": {
+        "method": "GET",
+        "urlPath": "/users",
+        "queryParameters": {
+          "page": {
+            "matches": "[0-9]+"
+          },
+          "size": {
+            "matches": "[0-9]+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "status": "ACTIVE",
+            "created_at": "2024-01-15T10:30:00"
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "status": "ACTIVE",
+            "created_at": "2024-01-16T11:15:00"
+          },
+          {
+            "id": 3,
+            "name": "Bob Johnson",
+            "email": "bob.johnson@example.com",
+            "status": "INACTIVE",
+            "created_at": "2024-01-17T14:45:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "create-user",
+      "request": {
+        "method": "POST",
+        "urlPath": "/users",
+        "headers": {
+          "Content-Type": {
+            "contains": "application/json"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.name"
+          },
+          {
+            "matchesJsonPath": "$.email"
+          }
+        ]
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{randomInt lower=100 upper=999}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "email": "{{jsonPath request.body '$.email'}}",
+          "status": "ACTIVE",
+          "created_at": "{{now format='yyyy-MM-dd HH:mm:ss'}}"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "update-user",
+      "request": {
+        "method": "PUT",
+        "urlPathPattern": "/users/([0-9]+)",
+        "headers": {
+          "Content-Type": {
+            "contains": "application/json"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{request.pathSegments.[1]}}",
+          "name": "{{jsonPath request.body '$.name'}}",
+          "email": "{{jsonPath request.body '$.email'}}",
+          "status": "ACTIVE",
+          "created_at": "2024-01-15T10:30:00"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "id": "delete-user",
+      "request": {
+        "method": "DELETE",
+        "urlPathPattern": "/users/([0-9]+)"
+      },
+      "response": {
+        "status": 204
+      }
+    },
+    {
+      "id": "search-users",
+      "request": {
+        "method": "GET",
+        "urlPath": "/users/search",
+        "queryParameters": {
+          "query": {
+            "matches": ".*"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "status": "ACTIVE",
+            "created_at": "2024-01-15T10:30:00"
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "status": "ACTIVE",
+            "created_at": "2024-01-16T11:15:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "simulate-timeout",
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "urlPath": "/users/timeout"
+      },
+      "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 10000,
+        "jsonBody": {
+          "message": "This will timeout"
+        }
+      }
+    },
+    {
+      "id": "simulate-error",
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "urlPath": "/users/error"
+      },
+      "response": {
+        "status": 500,
+        "jsonBody": {
+          "error": "Internal Server Error",
+          "message": "Simulated error for testing"
+        }
+      }
+    }
+  ]
+}
