@@ -50,6 +50,14 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock")
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    // Feign test dependencies
+    testImplementation("io.github.openfeign:feign-core:12.5")
+    testImplementation("io.github.openfeign:feign-jackson:12.5")
+    testImplementation("io.github.openfeign:feign-okhttp:12.5")
+    testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
+    
+    // Add this line to include the servlet API
+    testImplementation("javax.servlet:javax.servlet-api:4.0.1")
 }
 
 dependencyManagement {
