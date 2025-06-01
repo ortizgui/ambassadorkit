@@ -2,6 +2,7 @@ package com.company.ambassador.infrastructure.client.user
 
 import com.company.ambassador.domain.model.user.User
 import com.company.ambassador.domain.model.user.UserCreateRequest
+import com.company.ambassador.infrastructure.config.feign.UserServiceFeignConfig
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 

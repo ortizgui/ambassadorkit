@@ -2,6 +2,7 @@ package com.company.ambassador.infrastructure.client.product
 
 import com.company.ambassador.domain.model.product.Product
 import com.company.ambassador.domain.model.product.ProductCreateRequest
+import com.company.ambassador.infrastructure.config.feign.ProductServiceFeignConfig
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 

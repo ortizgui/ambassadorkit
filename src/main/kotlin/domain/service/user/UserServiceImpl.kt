@@ -2,8 +2,8 @@ package com.company.ambassador.domain.service.user
 
 import com.company.ambassador.domain.model.user.User
 import com.company.ambassador.domain.model.user.UserCreateRequest
-import com.company.ambassador.infrastructure.client.UserServiceClient
-import com.company.ambassador.infrastructure.config.RateLimiterConfig
+import com.company.ambassador.infrastructure.client.user.UserServiceClient
+import com.company.ambassador.infrastructure.config.ratelimit.RateLimiterConfig
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import io.github.resilience4j.retry.annotation.Retry
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter

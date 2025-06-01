@@ -2,8 +2,8 @@ package com.company.ambassador.domain.service.product
 
 import com.company.ambassador.domain.model.product.Product
 import com.company.ambassador.domain.model.product.ProductCreateRequest
-import com.company.ambassador.infrastructure.client.ProductServiceClient
-import com.company.ambassador.infrastructure.config.RateLimiterConfig
+import com.company.ambassador.infrastructure.client.product.ProductServiceClient
+import com.company.ambassador.infrastructure.config.ratelimit.RateLimiterConfig
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import io.github.resilience4j.retry.annotation.Retry
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter
