@@ -42,6 +42,10 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     // Logging
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
+    
+    // Add SpringDoc OpenAPI for Swagger documentation
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock")

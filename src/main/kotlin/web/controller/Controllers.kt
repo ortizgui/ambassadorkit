@@ -1,11 +1,15 @@
-package com.company.ambassador.presentation.controller
+package com.company.ambassador.web.controller
 
 import com.company.ambassador.domain.model.*
-import com.company.ambassador.domain.service.UserService
-import com.company.ambassador.domain.service.ProductService
+import com.company.ambassador.domain.model.common.ApiResponse
+import com.company.ambassador.domain.model.product.Product
+import com.company.ambassador.domain.model.product.ProductCreateRequest
+import com.company.ambassador.domain.model.user.User
+import com.company.ambassador.domain.model.user.UserCreateRequest
+import com.company.ambassador.domain.service.product.ProductService
+import com.company.ambassador.domain.service.user.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
@@ -13,9 +17,10 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
-import javax.validation.constraints.Min
-import javax.validation.constraints.NotBlank
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotBlank
+import io.swagger.v3.oas.annotations.responses.ApiResponse as SwaggerApiResponse
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -30,9 +35,9 @@ class UserController(
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID", description = "Retrieves a user by their unique identifier")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "User found successfully"),
-        ApiResponse(responseCode = "404", description = "User not found"),
-        ApiResponse(responseCode = "500", description = "Internal server error")
+        SwaggerApiResponse(responseCode = "200", description = "User found successfully"),
+        SwaggerApiResponse(responseCode = "404", description = "User not found"),
+        SwaggerApiResponse(responseCode = "500", description = "Internal server error")
     ])
     fun getUserById(
         @Parameter(description = "User ID", required = true)
