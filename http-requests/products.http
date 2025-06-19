@@ -1,0 +1,204 @@
+### Product API Requests
+### Base URL: http://localhost:8080
+
+### Variables
+# @baseUrl = http://localhost:8080
+
+### Get Product by ID
+GET {{baseUrl}}/api/v1/products/1
+Accept: application/json
+
+###
+
+### Get Products with Pagination
+GET {{baseUrl}}/api/v1/products?page=0&size=10
+Accept: application/json
+
+###
+
+### Get Products with Custom Pagination
+GET {{baseUrl}}/api/v1/products?page=1&size=5
+Accept: application/json
+
+###
+
+### Get Products with Category Filter
+GET {{baseUrl}}/api/v1/products?page=0&size=10&category=Electronics
+Accept: application/json
+
+###
+
+### Get Products by Category
+GET {{baseUrl}}/api/v1/products/category/Electronics
+Accept: application/json
+
+###
+
+### Get Products by Category - Books
+GET {{baseUrl}}/api/v1/products/category/Books
+Accept: application/json
+
+###
+
+### Create Product
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Smartphone",
+  "description": "Latest Android smartphone with 128GB storage",
+  "price": 799.99,
+  "category": "Electronics"
+}
+
+###
+
+### Create Another Product
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Programming Book",
+  "description": "Learn Kotlin programming from scratch",
+  "price": 49.99,
+  "category": "Books"
+}
+
+###
+
+### Create Product - Home Category
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Coffee Maker",
+  "description": "Automatic drip coffee maker with timer",
+  "price": 129.99,
+  "category": "Home"
+}
+
+###
+
+### Update Product
+PUT {{baseUrl}}/api/v1/products/1
+Content-Type: application/json
+
+{
+  "name": "Smartphone Pro",
+  "description": "Latest Android smartphone with 256GB storage and improved camera",
+  "price": 899.99,
+  "category": "Electronics",
+  "available": true
+}
+
+###
+
+### Update Product - Partial Update
+PUT {{baseUrl}}/api/v1/products/1
+Content-Type: application/json
+
+{
+  "price": 749.99,
+  "available": true
+}
+
+###
+
+### Update Product - Set Unavailable
+PUT {{baseUrl}}/api/v1/products/2
+Content-Type: application/json
+
+{
+  "available": false
+}
+
+###
+
+### Delete Product
+DELETE {{baseUrl}}/api/v1/products/1
+Accept: application/json
+
+###
+
+### Get Non-existent Product (404 Test)
+GET {{baseUrl}}/api/v1/products/999
+Accept: application/json
+
+###
+
+### Get Products from Non-existent Category
+GET {{baseUrl}}/api/v1/products/category/NonExistentCategory
+Accept: application/json
+
+###
+
+### Create Product with Invalid Data (Validation Test)
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "",
+  "price": -10.00,
+  "category": ""
+}
+
+###
+
+### Create Product with Missing Data (Validation Test)
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Test Product"
+}
+
+###
+
+### Create Product with Invalid Price
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Invalid Product",
+  "description": "Product with invalid price",
+  "price": 0,
+  "category": "Test"
+}
+
+###
+
+### Bulk Test - Create Multiple Products
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Laptop",
+  "description": "Gaming laptop with RTX graphics",
+  "price": 1299.99,
+  "category": "Electronics"
+}
+
+###
+
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Wireless Headphones",
+  "description": "Noise-canceling wireless headphones",
+  "price": 199.99,
+  "category": "Electronics"
+}
+
+###
+
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Cooking Guide",
+  "description": "Complete guide to Italian cooking",
+  "price": 29.99,
+  "category": "Books"
+}

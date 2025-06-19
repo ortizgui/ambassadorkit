@@ -13,6 +13,12 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -50,12 +56,21 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock")
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+    // Resilience4j test dependencies
+    testImplementation("io.github.resilience4j:resilience4j-test:2.2.0")
+    testImplementation("io.github.resilience4j:resilience4j-kotlin:2.2.0")
     // Feign test dependencies
     testImplementation("io.github.openfeign:feign-core:12.5")
     testImplementation("io.github.openfeign:feign-jackson:12.5")
     testImplementation("io.github.openfeign:feign-okhttp:12.5")
     testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
-    
+    // Coroutines test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    // Test containers
+    testImplementation("org.testcontainers:junit-jupiter:1.19.3")
+    testImplementation("org.testcontainers:testcontainers:1.19.3")
     // Add this line to include the servlet API
     testImplementation("javax.servlet:javax.servlet-api:4.0.1")
 }
